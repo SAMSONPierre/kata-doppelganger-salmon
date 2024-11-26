@@ -49,8 +49,8 @@ public class DiscountApplierTest {
     Notifier notifier = mock(Notifier.class);
     DiscountApplier discountApplier = new DiscountApplier(notifier);
     discountApplier.applyV1(10, userList);
-    verify(notifier, times(1)).notify(eq(user1), anyString());
-    verify(notifier, times(1)).notify(eq(user2), anyString());
+    verify(notifier, times(1)).notify(eq(user1), eq("You've got a new discount of 10%"));
+    verify(notifier, times(1)).notify(eq(user2), eq("You've got a new discount of 10%"));
   }
 
   @Test

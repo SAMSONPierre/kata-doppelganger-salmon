@@ -16,11 +16,9 @@ public class DiscountApplierTest {
 
   List<User> userList = new ArrayList<>();
 
-
   TestNotifier countingNotifier = new TestNotifier();
 
   DiscountApplier discountApplier = new DiscountApplier(countingNotifier);
-
 
   static class TestNotifier implements Notifier {
     private final HashMap<User, Integer> notifications = new HashMap<>();
@@ -55,6 +53,5 @@ public class DiscountApplierTest {
     assertEquals(1, countingNotifier.getNotifications().get(user1));
     assertEquals(1, countingNotifier.getNotifications().get(user2));
   }
-
 }
 

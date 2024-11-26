@@ -10,6 +10,5 @@ public class SafeCalculatorTest {
     int result = calculator.add(1, 2);
 
     assert(result == 3);
-    // TODO: write a test to demonstrate the bug in SafeCalculator.add()
   }
 }

@@ -16,9 +16,7 @@ public class MailSenderTest {
     MailSender mailSender = new MailSender(testHttpClient);
 
     static class testHttpClient implements HttpClient {
-
         private Object sendMailRequest;
-
 
         @Override
         public SendMailResponse post(String url, Object request) {
@@ -34,8 +32,6 @@ public class MailSenderTest {
 
     @Test
     void should_make_a_valid_http_request() {
-        // TODO: write a test to demonstrate the bug in MailSender.sendV1()
-
         mailSender.sendV1(user1, "message");
 
         assertEquals("toto@gmail.com", ((SendMailRequest) testHttpClient.getSendMailRequest()).recipient());
@@ -45,7 +41,6 @@ public class MailSenderTest {
 
     @Test
     void should_retry_when_getting_a_503_error() {
-        // TODO: write a test to demonstrate the bug in MailSender.sendV2()
         mailSender.sendV2(user1, "message");
 
         assertInstanceOf(SendMailRequest.class, testHttpClient.getSendMailRequest());

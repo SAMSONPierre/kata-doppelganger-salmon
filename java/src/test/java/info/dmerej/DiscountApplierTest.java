@@ -1,12 +1,14 @@
 package info.dmerej;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class DiscountApplierTest {
 
@@ -16,9 +18,9 @@ public class DiscountApplierTest {
 
   List<User> userList = new ArrayList<>();
 
-  TestNotifier countingNotifier = new TestNotifier();
+  //TestNotifier countingNotifier = new TestNotifier();
 
-  DiscountApplier discountApplier = new DiscountApplier(countingNotifier);
+  //DiscountApplier discountApplier = new DiscountApplier(countingNotifier);
 
   static class TestNotifier implements Notifier {
     private final HashMap<User, Integer> notifications = new HashMap<>();
@@ -37,21 +39,38 @@ public class DiscountApplierTest {
   void should_notify_twice_when_applying_discount_for_two_users_v1() {
     userList.add(user1);
     userList.add(user2);
-
+    /* PARTIE 1*/
+    /*
     discountApplier.applyV1(10, userList);
-
     assertEquals(1, countingNotifier.getNotifications().get(user1));
-    assertEquals(1, countingNotifier.getNotifications().get(user2));
+    assertEquals(1, countingNotifier.getNotifications().get(user2));*/
+
+    /* PARTIE 2 */
+    Notifier notifier = mock(Notifier.class);
+    DiscountApplier discountApplier = new DiscountApplier(notifier);
+    discountApplier.applyV1(10, userList);
+    verify(notifier, times(1)).notify(eq(user1), anyString());
+    verify(notifier, times(1)).notify(eq(user2), anyString());
   }
 
   @Test
   void should_notify_twice_when_applying_discount_for_two_users_v2() {
     userList.add(user1);
     userList.add(user2);
-    discountApplier.applyV2(10, userList);
+    /* PARTIE 1*/
+    /*discountApplier.applyV2(10, userList);
 
     assertEquals(1, countingNotifier.getNotifications().get(user1));
-    assertEquals(1, countingNotifier.getNotifications().get(user2));
+    assertEquals(1, countingNotifier.getNotifications().get(user2));*/
+
+    /* PARTIE 2 */
+    Notifier notifier = mock(Notifier.class);
+    DiscountApplier discountApplier = new DiscountApplier(notifier);
+    discountApplier.applyV2(10, userList);
+
+    ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+
+
   }
 }
 

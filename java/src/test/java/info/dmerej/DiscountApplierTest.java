@@ -17,9 +17,23 @@ public class DiscountApplierTest {
   List<User> userList = new ArrayList<>();
 
 
-  CountingNotifier countingNotifier = new CountingNotifier();
+  TestNotifier countingNotifier = new TestNotifier();
 
   DiscountApplier discountApplier = new DiscountApplier(countingNotifier);
+
+
+  static class TestNotifier implements Notifier {
+    private final HashMap<User, Integer> notifications = new HashMap<>();
+
+    @Override
+    public void notify(User user, String message) {
+      notifications.compute(user, (key, value) -> (value == null) ? 1 : value + 1);
+    }
+
+    public HashMap<User, Integer> getNotifications() {
+      return notifications;
+    }
+  }
 
   @Test
   void should_notify_twice_when_applying_discount_for_two_users_v1() {
@@ -30,29 +44,10 @@ public class DiscountApplierTest {
 
     discountApplier.applyV1(10, userList);
 
-    assertEquals(2, countingNotifier.getNotificationCount());
+    assertEquals(1, countingNotifier.getNotifications().get(user1));
+    assertEquals(1, countingNotifier.getNotifications().get(user2));
 
     //Mockito.verify(mockNotifierClass, times(2)).notify(Mockito.any(User.class), Mockito.anyString());
-
-  }
-
-
-  // Custom Notifier implementation
-  static class CountingNotifier implements Notifier {
-    private int notificationCount = 0;
-
-    //HashMap<User, Integer> userMessageMap = new HashMap<>();
-
-    @Override
-    public void notify(User user, String message) {
-      notificationCount++;
-
-      //userMessageMap.put(user, );
-    }
-
-    public int getNotificationCount() {
-      return notificationCount;
-    }
 
   }
 
@@ -63,6 +58,10 @@ public class DiscountApplierTest {
     userList.add(user2);
     discountApplier.applyV2(10, userList);
 
+    assertEquals(1, countingNotifier.getNotifications().get(user1));
+    assertEquals(1, countingNotifier.getNotifications().get(user2));
+
   }
 
 }
+

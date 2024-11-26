@@ -39,28 +39,21 @@ public class DiscountApplierTest {
   void should_notify_twice_when_applying_discount_for_two_users_v1() {
     userList.add(user1);
     userList.add(user2);
-    // TODO: write a test to demonstrate the bug in DiscountApplier.applyV1()
-    //NotifierClass mockNotifierClass = Mockito.mock(NotifierClass.class);
 
     discountApplier.applyV1(10, userList);
 
     assertEquals(1, countingNotifier.getNotifications().get(user1));
     assertEquals(1, countingNotifier.getNotifications().get(user2));
-
-    //Mockito.verify(mockNotifierClass, times(2)).notify(Mockito.any(User.class), Mockito.anyString());
-
   }
 
   @Test
   void should_notify_twice_when_applying_discount_for_two_users_v2() {
-    // TODO: write a test to demonstrate the bug in DiscountApplier.applyV2()
     userList.add(user1);
     userList.add(user2);
     discountApplier.applyV2(10, userList);
 
     assertEquals(1, countingNotifier.getNotifications().get(user1));
     assertEquals(1, countingNotifier.getNotifications().get(user2));
-
   }
 
 }

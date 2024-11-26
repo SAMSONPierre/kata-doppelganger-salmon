@@ -28,10 +28,6 @@ public class MailSenderTest {
 
             return null;
         }
-        /*
-        public HashMap<User, Integer> getNotifications() {
-            return notifications;
-        }*/
 
         public SendMailRequest getSendMailRequest() {
             return sendMailRequest;

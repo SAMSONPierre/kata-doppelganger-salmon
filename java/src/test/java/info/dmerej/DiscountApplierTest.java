@@ -42,8 +42,10 @@ public class DiscountApplierTest {
     /* PARTIE 1*/
     /*
     discountApplier.applyV1(10, userList);
+
     assertEquals(1, countingNotifier.getNotifications().get(user1));
-    assertEquals(1, countingNotifier.getNotifications().get(user2));*/
+    assertEquals(1, countingNotifier.getNotifications().get(user2));
+    */
 
     /* PARTIE 2 */
     Notifier notifier = mock(Notifier.class);
@@ -58,19 +60,20 @@ public class DiscountApplierTest {
     userList.add(user1);
     userList.add(user2);
     /* PARTIE 1*/
-    /*discountApplier.applyV2(10, userList);
+    /*
+    discountApplier.applyV2(10, userList);
 
     assertEquals(1, countingNotifier.getNotifications().get(user1));
-    assertEquals(1, countingNotifier.getNotifications().get(user2));*/
+    assertEquals(1, countingNotifier.getNotifications().get(user2));
+    */
 
     /* PARTIE 2 */
     Notifier notifier = mock(Notifier.class);
     DiscountApplier discountApplier = new DiscountApplier(notifier);
     discountApplier.applyV2(10, userList);
 
-    ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-
-
+    verify(notifier, times(1)).notify(eq(user1), eq("You've got a new discount of 10%"));
+    verify(notifier, times(1)).notify(eq(user2), eq("You've got a new discount of 10%"));
   }
 }
 
